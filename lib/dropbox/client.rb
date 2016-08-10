@@ -319,8 +319,8 @@ module Dropbox
     # @param [String] path
     # @param [Dropbox::SharedLinkSettings] settings
     # @return [Dropbox::SpaceUsage]
-    def create_shared_link_with_settings(path, settings )
-      request('/create_shared_link_with_settings', path, settings)
+    def create_shared_link_with_settings(path, settings)
+      request('/create_shared_link_with_settings', path: path, settings: settings)
     end
 
     private
