@@ -166,8 +166,16 @@ module Dropbox
     # @param [String] cursor
     # @return [Array<Dropbox::Metadata>]
     def continue_list_folder(cursor)
-      resp = request('/files/list_folder/continue', cursor: cursor)
+      resp = np_continue_list_folder(cursor)
       resp['entries'].map { |e| parse_tagged_response(e) }
+    end
+
+    # Get the contents of a folder that are after a cursor. No parse!
+    #
+    # @param [String] cursor
+    # @return [Array<Dropbox::Metadata>]
+    def np_continue_list_folder(cursor)
+      request('/files/list_folder/continue', cursor: cursor)
     end
 
     # Get a cursor for a folder's current state.
