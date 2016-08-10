@@ -135,14 +135,30 @@ module Dropbox
       include_media_info = false,
       include_deleted = false,
       include_has_explicit_shared_members = false	)
-      resp = request('/files/list_folder',{
+      resp = np_list_folder(path, recursive, include_media_info, include_deleted, include_has_explicit_shared_members)
+      resp['entries'].map { |e| parse_tagged_response(e) }
+    end
+
+    # Get the contents of a folder. No Parse!
+    #
+    # @param [String] path
+    # @param [boolean] recursive
+    # @param [boolean] include_media_info
+    # @param [boolean] include_deleted
+    # @param [boolean] include_has_explicit_shared_members
+    # @return [Array<Dropbox::Metadata>]
+    def np_list_folder(path,
+      recursive = false,
+      include_media_info = false,
+      include_deleted = false,
+      include_has_explicit_shared_members = false	)
+      request('/files/list_folder',{
         path: path,
         recursive: recursive,
         include_media_info: include_media_info,
         include_deleted: include_deleted,
         include_has_explicit_shared_members: include_has_explicit_shared_members
       })
-      resp['entries'].map { |e| parse_tagged_response(e) }
     end
 
     # Get the contents of a folder that are after a cursor.
