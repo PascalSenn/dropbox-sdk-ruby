@@ -314,6 +314,15 @@ module Dropbox
       SpaceUsage.new(resp)
     end
 
+    # Create a shared link with custom settings. If no settings are given then the default visibility is RequestedVisibility.public
+    #
+    # @param [String] path
+    # @param [Dropbox::SharedLinkSettings] settings
+    # @return [Dropbox::SpaceUsage]
+    def create_shared_link_with_settings(path, settings )
+      request('/create_shared_link_with_settings', path, settings)
+    end
+
     private
       def parse_tagged_response(resp)
         case resp['.tag']
