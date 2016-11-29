@@ -131,11 +131,16 @@ module Dropbox
     # @param [boolean] include_has_explicit_shared_members
     # @return [Array<Dropbox::Metadata>]
     def list_folder(path,
-      recursive = false,
-      include_media_info = false,
-      include_deleted = false,
-      include_has_explicit_shared_members = false	)
-      resp = np_list_folder(path, recursive, include_media_info, include_deleted, include_has_explicit_shared_members)
+      recursive: false,
+      include_media_info: false,
+      include_deleted: false,
+      include_has_explicit_shared_members: false	)
+      resp = np_list_folder(path, {
+        recursive: recursive,
+        include_media_info: include_media_info,
+        include_deleted: include_deleted,
+        include_has_explicit_shared_members: include_has_explicit_shared_members
+      })
       resp['entries'].map { |e| parse_tagged_response(e) }
     end
 
@@ -148,10 +153,10 @@ module Dropbox
     # @param [boolean] include_has_explicit_shared_members
     # @return [Array<Dropbox::Metadata>]
     def np_list_folder(path,
-      recursive = false,
-      include_media_info = false,
-      include_deleted = false,
-      include_has_explicit_shared_members = false	)
+      recursive: false,
+      include_media_info: false,
+      include_deleted: false,
+      include_has_explicit_shared_members: false	)
       request('/files/list_folder',{
         path: path,
         recursive: recursive,
